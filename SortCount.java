@@ -321,6 +321,12 @@ public class SortCount {
         mSort(arr, tmp, 0, arr.length - 1);
     }
     
+    public static void promptEnterKey() {
+        System.out.println("Press \"ENTER\" to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+    
     
     /*
      * shellBubbleSort
@@ -332,27 +338,47 @@ public class SortCount {
          * Find initial increment: one less than the largest
          * power of 2 that is <= the number of objects.
          */
+        //System.out.println("in shell bubble: "); 
         int incr = 1;
         while (2 * incr <= arr.length)
             incr = 2 * incr;
         incr = incr - 1;
-        
+        //System.out.println("Incr = " + incr); 
+       // boolean swapDone = false;
         while (incr >= 1) {
             //Bubblesort algorithm
-            for (int i = arr.length - 1; i > 0; i--) {
-                for (int j = 0; j < i; j++) {
-                    if (compare(arr[j] > arr[j+1]))
-                        swap(arr, j, j+1);
-                        moves++; 
+                //System.out.println("Incr = " + incr);
+                //printArray(arr);
+                System.out.println(); 
+                System.out.println("Passes with: incr, j");
+                for (int j = arr.length; j > incr; j = j - incr) {
+                     System.out.println("Incr: " + incr + "\tJ: " + j); 
+                     //System.out.println("checking from 0 to " + (j - 1)); 
+                     for (int i = incr; i < j; i++) {
+                         if (compare(arr[i] < arr[i - incr])) {
+                             //System.out.println(arr[i] + " is less than " + arr[i - incr]); 
+                             swap(arr, i, i - incr);
+                             //System.out.println("Swapped " + arr[i] + " for " + arr[i - incr]);
+                             //System.out.println("In positions " + i + " and " + (i - incr)); 
+                             
+                         }
+                         System.out.print(" " + i + " "); 
+                    
+                     }
+                     System.out.println();
+
+
                 }
-            }
-             // Calculate increment for next pass.
-            incr = incr / 2;
+                incr = incr / 2;   
+                
         }
-        
-        
-        
+
     }
+            
+        
+        
+        
+ 
     /**
      * Prints the specified array in the following form:
      * { arr[0] arr[1] ... }
@@ -450,5 +476,7 @@ public class SortCount {
         shellBubbleSort(a);
         printStats();
         printArray(a);
+        
+        in.close();
     }
 }
