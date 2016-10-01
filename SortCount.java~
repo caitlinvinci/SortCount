@@ -2,10 +2,6 @@
  * SortCount.java
  *
  * Computer Science E-22, Harvard University
- * 
- * Bubble/Shell addition by Caitlin Vinci
- * caitlinvinci@gmail.com
- * 10/1/2016
  */
 
 import java.util.*;
@@ -321,38 +317,6 @@ public class SortCount {
         mSort(arr, tmp, 0, arr.length - 1);
     }
     
-    
-    /*
-     * shellBubbleSort
-     * 
-     * 
-     */
-    public static void shellBubbleSort(int [] arr) {
-         /*
-         * Find initial increment: one less than the largest
-         * power of 2 that is <= the number of objects.
-         */
-        int incr = 1;
-        while (2 * incr <= arr.length)
-            incr = 2 * incr;
-        incr = incr - 1;
-        
-        while (incr >= 1) {
-            //Bubblesort algorithm
-            for (int i = arr.length - 1; i > 0; i--) {
-                for (int j = 0; j < i; j++) {
-                    if (compare(arr[j] > arr[j+1]))
-                        swap(arr, j, j+1);
-                        moves++; 
-                }
-            }
-             // Calculate increment for next pass.
-            incr = incr / 2;
-        }
-        
-        
-        
-    }
     /**
      * Prints the specified array in the following form:
      * { arr[0] arr[1] ... }
@@ -441,13 +405,6 @@ public class SortCount {
         System.arraycopy(asave, 0, a, 0, asave.length);
         initStats();
         bubbleSort(a);
-        printStats();
-        printArray(a);
-        
-        System.out.print("shellBubbleSort\t\t");
-        System.arraycopy(asave, 0, a, 0, asave.length);
-        initStats();
-        shellBubbleSort(a);
         printStats();
         printArray(a);
     }
