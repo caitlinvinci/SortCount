@@ -6,6 +6,9 @@
  * Bubble/Shell addition by Caitlin Vinci
  * caitlinvinci@gmail.com
  * 10/1/2016
+ * 
+ * This program is currently adjusted to test 2D arrays using the 
+ * constructed method shellBubbleSort. 
  */
 
 import java.util.*;
@@ -28,11 +31,12 @@ public class SortCount {
     private static long compares;     // total number of comparisons
     private static long moves;        // total number of moves
     
-    private static long comptally; 
-    private static long movetally; 
-    private static long compaverage; 
-    private static long moveaverage; 
-    private static long testarraylength; 
+    //the following variables were made for testing and averaging multiple arrs
+    private static long comptally; //running tally of the comparisons 
+    private static long movetally; //running tally of moves
+    private static long compaverage; //average comparisons
+    private static long moveaverage; //average moves
+    private static long testarraylength; //length of 2D test array
     
     /*
      * compare - a wrapper that allows us to count comparisons.
@@ -108,7 +112,8 @@ public class SortCount {
     
     /*
      * sortedArray - creates a sorted array of integers with 
-     * the specified number of elements
+     * the specified number of elements. This was created to test
+     * the efficiency of shellBubbleSort on sorted arrays. 
      */
     
     public static int [] sortedArray(int n) {
@@ -128,17 +133,15 @@ public class SortCount {
     }
     
     /**
-     * findAverage
+     * findAverage finds the average comps/moves for the 
+     * arrays in the 2D test array. This was created to test
+     * shellBubbleSort. 
      */
     public static void findAverage() {
-        System.out.println("Total comparisons = " + comptally); 
-        System.out.println("Total moves = " + movetally); 
-        System.out.println("Divided by: " + testarraylength); 
+ 
         moveaverage = movetally/testarraylength;
         compaverage = comptally/testarraylength; 
         
-        System.out.print(compaverage + " Average comparisons\t");
-        System.out.print(moveaverage + " Average moves\t");
         movetally = 0; 
         compaverage = 0; 
     }
@@ -151,13 +154,13 @@ public class SortCount {
         for (int i = 0; i < (10 - spaces); i++)
             System.out.print(" ");
         System.out.print(compares + " comparisons\t");
-        System.out.print("\nTally" + comptally); 
+      
         comptally = comptally + compares; 
         spaces = (int)(Math.log(moves)/Math.log(10));
         for (int i = 0; i < (10 - spaces); i++)
             System.out.print(" ");
         System.out.println(moves + " moves");
-        System.out.print("\nTally" + movetally); 
+
         movetally = movetally + moves; 
     }
     
@@ -367,8 +370,12 @@ public class SortCount {
     
     
     /*
-     * shellBubbleSort
+     * shellBubbleSort uses the incremental method of shell sort
+     * but instead of using the traditional selection sort, the 
+     * "subarrays" are sorted using a bubble method. 
      * 
+     * Caitlin Vinci
+     * 10/1/2016 
      * 
      */
     public static void shellBubbleSort(int [] arr) {
@@ -376,7 +383,6 @@ public class SortCount {
          * Find initial increment: one less than the largest
          * power of 2 that is <= the number of objects.
          */
-        //System.out.println("in shell bubble: "); 
         int incr = 1;
         while (2 * incr <= arr.length)
             incr = 2 * incr;
@@ -461,13 +467,17 @@ public class SortCount {
             for (int i = 0; i < 15; i++) {
                 tests[i] = almostSortedArray(numItems);
             }
+            moves = 0;
+            compares = 0; 
         if (arrayType.equalsIgnoreCase("S"))
             for (int i = 0; i < 15; i++) {
                 tests[i] = sortedArray(numItems);
             }
-        else
-            for (int i = 0; i < 15; i++) {
-                tests[i] = randomArray(numItems);
+            moves = 0; 
+            compares = 0; 
+
+        for (int i = 0; i < 15; i++) {
+            tests[i] = randomArray(numItems);
             }
         //asave = new int[numItems];
         //System.arraycopy(a, 0, asave, 0, a.length);
@@ -520,6 +530,7 @@ public class SortCount {
         printStats();
         printArray(a);
         */
+        in.nextLine();
         
         System.out.print("shellBubbleSort\t\t");
         //System.arraycopy(asave, 0, a, 0, asave.length);
@@ -536,6 +547,9 @@ public class SortCount {
         initStats();
         findAverage(); 
         comptally = 0;
+        compares = 0; 
+        moves = 0; 
+        movetally = 0; 
         
         
         
