@@ -142,6 +142,9 @@ public class SortCount {
         moveaverage = movetally/testarraylength;
         compaverage = comptally/testarraylength; 
         
+        System.out.println("Average Moves: " + moveaverage); 
+        System.out.println("Average Comparisons: " + compaverage); 
+        
         movetally = 0; 
         compaverage = 0; 
     }
@@ -362,10 +365,17 @@ public class SortCount {
         mSort(arr, tmp, 0, arr.length - 1);
     }
     
+    /*
+     * promptEnterKey was a debugging method created to visualize
+     * the steps in the sorting process. This can be used to make
+     * stops in the program. 
+     * 
+     */
     public static void promptEnterKey() {
         System.out.println("Press \"ENTER\" to continue...");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
+        scanner.close(); 
     }
     
     
@@ -375,7 +385,8 @@ public class SortCount {
      * "subarrays" are sorted using a bubble method. 
      * 
      * Caitlin Vinci
-     * 10/1/2016 
+     * 10/1/2016
+     * 
      * 
      */
     public static void shellBubbleSort(int [] arr) {
@@ -387,36 +398,19 @@ public class SortCount {
         while (2 * incr <= arr.length)
             incr = 2 * incr;
         incr = incr - 1;
-        //System.out.println("Incr = " + incr); 
-       // boolean swapDone = false;
         while (incr >= 1) {
             //Bubblesort algorithm
-                //System.out.println("Incr = " + incr);
-                //printArray(arr);
-                //System.out.println(); 
-                //System.out.println("Passes with: incr, j");
-                for (int j = arr.length; j > incr; j = j - incr) {
-                     //System.out.println("Incr: " + incr + "\tJ: " + j); 
-                     //System.out.println("checking from 0 to " + (j - 1)); 
-                     for (int i = incr; i < j; i++) {
-                         if (compare(arr[i] < arr[i - incr])) {
-                             //System.out.println(arr[i] + " is less than " + arr[i - incr]); 
-                             swap(arr, i, i - incr);
-                             //System.out.println("Swapped " + arr[i] + " for " + arr[i - incr]);
-                             //System.out.println("In positions " + i + " and " + (i - incr)); 
-                             
-                         }
-                         //System.out.print(" " + i + " "); 
+            for (int j = arr.length; j > incr; j = j - incr) {
+                for (int i = incr; i < j; i++) {
+                    if (compare(arr[i] < arr[i - incr])) {
+                        swap(arr, i, i - incr);
+                        
+                    }
                     
-                     }
-                     //System.out.println();
-
-
                 }
-                incr = incr / 2;   
-                
+            }
+            incr = incr / 2;   
         }
-
     }
             
         
@@ -530,18 +524,14 @@ public class SortCount {
         printStats();
         printArray(a);
         */
-        in.nextLine();
         
-        System.out.print("shellBubbleSort\t\t");
+        System.out.println("shellBubbleSort");
         //System.arraycopy(asave, 0, a, 0, asave.length);
-        System.out.println(compares + " " + moves + " " + comptally + " " + movetally); 
         for (int i = 0; i < 15; i++) {
                 initStats();
                 shellBubbleSort(tests[i]);
                 printStats();
                 printArray(tests[i]);
-                //comptally = comptally + compares;
-                //movetally = movetally + moves; 
                 
         }
         initStats();
@@ -554,5 +544,6 @@ public class SortCount {
         
         
         in.close();
+
     }
 }
