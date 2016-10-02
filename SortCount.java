@@ -28,6 +28,12 @@ public class SortCount {
     private static long compares;     // total number of comparisons
     private static long moves;        // total number of moves
     
+    private static long comptally; 
+    private static long movetally; 
+    private static long compaverage; 
+    private static long moveaverage; 
+    private static long testarraylength; 
+    
     /*
      * compare - a wrapper that allows us to count comparisons.
      */
@@ -100,12 +106,41 @@ public class SortCount {
         return arr;
     }
     
+    /*
+     * sortedArray - creates a sorted array of integers with 
+     * the specified number of elements
+     */
+    
+    public static int [] sortedArray(int n) {
+        int[] arr = randomArray(n);
+        quickSort(arr);
+        return arr; 
+    }
+    
     /**
      * Sets the counts of moves and comparisons to 0.
      */
     public static void initStats() {
+        //comptally = comptally + compares;
+        //movetally = movetally + moves; 
         compares = 0;
         moves = 0;
+    }
+    
+    /**
+     * findAverage
+     */
+    public static void findAverage() {
+        System.out.println("Total comparisons = " + comptally); 
+        System.out.println("Total moves = " + movetally); 
+        System.out.println("Divided by: " + testarraylength); 
+        moveaverage = movetally/testarraylength;
+        compaverage = comptally/testarraylength; 
+        
+        System.out.print(compaverage + " Average comparisons\t");
+        System.out.print(moveaverage + " Average moves\t");
+        movetally = 0; 
+        compaverage = 0; 
     }
     
     /**
@@ -116,11 +151,14 @@ public class SortCount {
         for (int i = 0; i < (10 - spaces); i++)
             System.out.print(" ");
         System.out.print(compares + " comparisons\t");
-        
+        System.out.print("\nTally" + comptally); 
+        comptally = comptally + compares; 
         spaces = (int)(Math.log(moves)/Math.log(10));
         for (int i = 0; i < (10 - spaces); i++)
             System.out.print(" ");
         System.out.println(moves + " moves");
+        System.out.print("\nTally" + movetally); 
+        movetally = movetally + moves; 
     }
     
     /*
@@ -349,10 +387,10 @@ public class SortCount {
             //Bubblesort algorithm
                 //System.out.println("Incr = " + incr);
                 //printArray(arr);
-                System.out.println(); 
-                System.out.println("Passes with: incr, j");
+                //System.out.println(); 
+                //System.out.println("Passes with: incr, j");
                 for (int j = arr.length; j > incr; j = j - incr) {
-                     System.out.println("Incr: " + incr + "\tJ: " + j); 
+                     //System.out.println("Incr: " + incr + "\tJ: " + j); 
                      //System.out.println("checking from 0 to " + (j - 1)); 
                      for (int i = incr; i < j; i++) {
                          if (compare(arr[i] < arr[i - incr])) {
@@ -362,10 +400,10 @@ public class SortCount {
                              //System.out.println("In positions " + i + " and " + (i - incr)); 
                              
                          }
-                         System.out.print(" " + i + " "); 
+                         //System.out.print(" " + i + " "); 
                     
                      }
-                     System.out.println();
+                     //System.out.println();
 
 
                 }
@@ -397,8 +435,9 @@ public class SortCount {
     }
     
     public static void main(String args[]) {
-        int[] a;       // the array
-        int[] asave;   // a copy of the original unsorted array
+        //int[] a;       // the array
+        
+        //int[] asave;   // a copy of the original unsorted array
         int numItems;
         String arrayType;
         
@@ -408,26 +447,37 @@ public class SortCount {
         Scanner in = new Scanner(System.in);
         System.out.print("How many items in the array? ");
         numItems = in.nextInt();
+        int [] [] tests = new int [15][numItems]; 
         in.nextLine();
-        System.out.print("Random (r) or almost sorted (a)? ");
+        System.out.print("Random (r), sorted (s), or almost sorted (a)? ");
         arrayType = in.nextLine();
         System.out.println();
+        testarraylength = 15; 
         
         /* 
          * Create the arrays. 
          */
         if (arrayType.equalsIgnoreCase("A"))
-            a = almostSortedArray(numItems);
+            for (int i = 0; i < 15; i++) {
+                tests[i] = almostSortedArray(numItems);
+            }
+        if (arrayType.equalsIgnoreCase("S"))
+            for (int i = 0; i < 15; i++) {
+                tests[i] = sortedArray(numItems);
+            }
         else
-            a = randomArray(numItems);
-        asave = new int[numItems];
-        System.arraycopy(a, 0, asave, 0, a.length);
-        printArray(a);
+            for (int i = 0; i < 15; i++) {
+                tests[i] = randomArray(numItems);
+            }
+        //asave = new int[numItems];
+        //System.arraycopy(a, 0, asave, 0, a.length);
+        //printArray(a);
         
         /*
          * Try each of the various algorithms, starting each time 
          * with a fresh copy of the initial array.
          */
+        /*
         System.out.print("quickSort\t\t");
         System.arraycopy(asave, 0, a, 0, asave.length);
         initStats();
@@ -469,13 +519,25 @@ public class SortCount {
         bubbleSort(a);
         printStats();
         printArray(a);
+        */
         
         System.out.print("shellBubbleSort\t\t");
-        System.arraycopy(asave, 0, a, 0, asave.length);
+        //System.arraycopy(asave, 0, a, 0, asave.length);
+        System.out.println(compares + " " + moves + " " + comptally + " " + movetally); 
+        for (int i = 0; i < 15; i++) {
+                initStats();
+                shellBubbleSort(tests[i]);
+                printStats();
+                printArray(tests[i]);
+                //comptally = comptally + compares;
+                //movetally = movetally + moves; 
+                
+        }
         initStats();
-        shellBubbleSort(a);
-        printStats();
-        printArray(a);
+        findAverage(); 
+        comptally = 0;
+        
+        
         
         in.close();
     }
